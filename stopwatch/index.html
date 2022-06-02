@@ -1,0 +1,147 @@
+<!--Create a web app with a count down timer using HTML CSS Bootstrap and Javascript-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stop Watch</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .container {
+            text-align: center;
+            width: 400px;
+        }
+        #timer {
+            font-size: 200px;
+            font-weight: bold;
+        }
+        #start, #pause, #reset, #refresh {
+            width: 100px;
+            height: 50px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #start {
+            margin-top: 20px;
+        }
+        #pause {
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        #reset {
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        #refresh {
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        #countdown {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Stop Watch</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="timer">
+                <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="countdown">
+                <button id="start" class="btn btn-success">Start</button>
+                <button id="pause" class="btn btn-warning">Pause</button>
+                <button id="reset" class="btn btn-danger">Reset</button>
+                <button id="refresh" class="btn btn-dark">Refresh</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var seconds = 0;
+    var minutes = 0;
+    var hours = 0;
+    var timer;
+    var isPaused = false;
+    var isStarted = false;
+    var isReset = false;
+
+    function startTimer() {
+        if (isStarted) {
+            return;
+        }
+        isStarted = true;
+        timer = setInterval(function () {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            $("#seconds").text(("0" + seconds).slice(-2));
+            $("#minutes").text(("0" + minutes).slice(-2));
+            $("#hours").text(("0" + hours).slice(-2));
+        }, 1000);
+    }
+
+    function pauseTimer() {
+        if (!isStarted) {
+            return;
+        }
+        isPaused = true;
+        clearInterval(timer);
+    }
+
+    function resetTimer() {
+        if (!isStarted) {
+            return;
+        }
+        isReset = true;
+        clearInterval(timer);
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
+        $("#seconds").text(("0" + seconds).slice(-2));
+        $("#minutes").text(("0" + minutes).slice(-2));
+        $("#hours").text(("0" + hours).slice(-2));
+    }
+
+        // create a function to refresh the page
+        function refreshPage() {
+        window.location.reload();
+    }
+
+    $("#start").click(function () {
+        startTimer();
+    });
+
+    $("#pause").click(function () {
+        pauseTimer();
+    });
+
+    $("#reset").click(function () {
+        resetTimer();
+    });
+
+    $("#refresh").click(function () {
+        refreshPage();
+    });
+    
+</script>
+
+</body>
+
+</html>
